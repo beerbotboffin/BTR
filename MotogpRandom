@@ -1,0 +1,40 @@
+# Brisbane Track Riders
+# Facebook Random Entry List Thingy
+# Shane Frost Apr 2018
+# 
+
+import re
+
+with open("Race.txt") as f:
+    content = f.readlines()
+content = [x.strip() for x in content] 
+
+y = 1
+resultList = []
+racers = ["rossi","vale","valentino rossi","dani pedrosa","marc marquez","andrea dovizioso","jorge lorenzo","maverick vinales",
+	"johann zarco","jonas folger","danilo petrucci","jack miller","karel abraham","alvaro bautista","andrea iannone","alex rins",
+	"takaaki nakagami","cal crutchlow","thomas luthi","franco morbidelli","bradley smith","pol espargaro","tito rabat",
+	"xavier simeon","aleix espargaro","scott redding","dani","marc","andrea","jorge","maverick","valentino","johann","jonas",
+	"danilo","jack","karel","alvaro","andrea","alex","takaaki","cal","thomas","franco","bradley","pol","tito","xavier","aleix",
+	"scott","pedrosa","marquez","dovizioso","lorenzo","vinales","rossi","zarco","folger","petrucci","miller","abraham","bautista",
+	"iannone","rins","nakagami","crutchlow","luthi","morbidelli","smith","espargaro","rabat","simeon","espargaro","redding","ped",
+	"mar","dov","lor","vin","ros","zar","fol","pet","mil","abr","bau","ian","rin","nak","cru","lut","mor","smi","esp","rab","sim",
+	"esp","red","pedr","marq","dovi","lore","vina","ross","zarc","folg","petr","mill","abra","baut","iann","rins","naka","crut",
+	"luth","morb","smit","espa","raba","sime","espa","redd","zaco"]
+
+for x in range(0, len(content)):
+	if x < len(content)-1:
+		if content[x] != "Manage":
+			if content[x][:4] != "Like":
+				conlen = len(content[x+1])
+				if content[x] == content[x][:conlen]:
+					d = content[x][:1]
+					if d not in ["1","2","3","4","5","6","7","8","9","0","("]:
+						if content[x].lower() not in racers:
+							resultList.append(str(y) + ". " + content[x])
+							y = y + 1
+
+for x in range(0, len(resultList)):	
+	print(resultList[x])
+
+k=input("press close to exit") 

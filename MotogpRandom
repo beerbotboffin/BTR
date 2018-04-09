@@ -1,16 +1,24 @@
 # Brisbane Track Riders
 # Facebook Random Entry List Thingy
 # Shane Frost Apr 2018
-# 
+
+# To use, copy the comments and paste it into the file race.txt.
+# Run Race.py
+# Results are in BTRComments.txt
+# Remember me when there's a spare prize Jack...
 
 import re
 
+# Open the text file with the comments 
 with open("Race.txt") as f:
     content = f.readlines()
 content = [x.strip() for x in content] 
 
+# declare variables and lists
 y = 1
 resultList = []
+members = []
+
 racers = ["rossi","vale","valentino rossi","dani pedrosa","marc marquez","andrea dovizioso","jorge lorenzo","maverick vinales",
 	"johann zarco","jonas folger","danilo petrucci","jack miller","karel abraham","alvaro bautista","andrea iannone","alex rins",
 	"takaaki nakagami","cal crutchlow","thomas luthi","franco morbidelli","bradley smith","pol espargaro","tito rabat",
@@ -20,8 +28,10 @@ racers = ["rossi","vale","valentino rossi","dani pedrosa","marc marquez","andrea
 	"iannone","rins","nakagami","crutchlow","luthi","morbidelli","smith","espargaro","rabat","simeon","espargaro","redding","ped",
 	"mar","dov","lor","vin","ros","zar","fol","pet","mil","abr","bau","ian","rin","nak","cru","lut","mor","smi","esp","rab","sim",
 	"esp","red","pedr","marq","dovi","lore","vina","ross","zarc","folg","petr","mill","abra","baut","iann","rins","naka","crut",
-	"luth","morb","smit","espa","raba","sime","espa","redd","zaco"]
+	"luth","morb","smit","espa","raba","sime","espa","redd","zaco","dovi,","pedro"]
 
+numberlist = ["1","2","3","4","5","6","7","8","9","0","("] # remove extra lines where members have one line per rider
+	
 for x in range(0, len(content)):
 	if x < len(content)-1:
 		if content[x] != "Manage":
@@ -29,12 +39,19 @@ for x in range(0, len(content)):
 				conlen = len(content[x+1])
 				if content[x] == content[x][:conlen]:
 					d = content[x][:1]
-					if d not in ["1","2","3","4","5","6","7","8","9","0","("]:
+					if d not in numberlist:
 						if content[x].lower() not in racers:
-							resultList.append(str(y) + ". " + content[x])
-							y = y + 1
+							if content[x].lower() not in members:
+								members.append(content[x].lower())
+
+# Add numbers to the members
+for x in range(0,len(members)):								
+	resultList.append(str(y) + ". " + members[x])
+	y = y + 1
+
+# Create the output file
+f= open("BTRCommentOrder.txt","w+")	
 
 for x in range(0, len(resultList)):	
 	print(resultList[x])
-
-k=input("press close to exit") 
+	f.write(resultList[x] + "\r")
